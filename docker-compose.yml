@@ -12,12 +12,17 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    networks:
+      - backend
+      - frontend
 
   frontend:
     build:
       context: ./frontend
     ports:
       - "80:80"
+    networks:
+      - frontend
 
   db:
     image: mysql:8.0.29-debian
@@ -30,6 +35,12 @@ services:
     volumes:
       - db_volume:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend
+networks:
+  frontend:
+  backend:
+
 
 volumes:
   db_volume:
