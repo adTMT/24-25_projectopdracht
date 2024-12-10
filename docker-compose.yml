@@ -19,10 +19,14 @@ services:
   frontend:
     build:
       context: ./frontend
-    ports:
-      - "80:80"
+    labels:
+      - "traefik.http.routers.my-app.rule=Host(`s148424.tech`)"
+      - "traefik.http.routers.my-app.tls=true"
+      - "traefik.http.routers.my-app.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik"
     networks:
       - frontend
+      - proxy
 
   db:
     image: mysql:8.0.29-debian
@@ -40,7 +44,9 @@ services:
 networks:
   frontend:
   backend:
-
+  proxy:
+    external: true
+    name: traefik
 
 volumes:
   db_volume:
