@@ -1,0 +1,20 @@
+entryPoints:
+  web:
+    address: ":80"
+
+  websecure:
+    address: ":443"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: s148424@ap.be
+      storage: acme.json
+      httpChallenge:
+        entryPoint: web
+providers:
+  docker: {}
+  file:
+    directory: "/etc/traefik/conf.d"
+api:
+  dashboard: true
